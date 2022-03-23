@@ -1,0 +1,156 @@
+\section{Instalación y configuración de servidor NFS}
+
+
+NFS (sistema de archivos de red: «Network File System») es un protocolo que permite acceso remoto a un sistema de archivos a través de la red. Todos los sistemas Unix pueden trabajar con este protocolo.
+
+% Para el montaje de este servidor en las máquinas con debian y arch linux se basa en la siguiente información
+
+% \begin{itemize}
+%     \item \url{http://l.github.io/debian-handbook/html/es-ES/sect.nfs-file-server.html}
+    
+%     \item \url{https://wiki.archlinux.org/index.php/NFS}      
+    
+    
+% \end{itemize}
+
+\subsection{Configuración servidor}
+
+\begin{enumerate}
+
+    \item En el master
+    
+\begin{lstlisting}[language=bash,style=mystyle] 
+$ sudo apt install nfs-kernel-server portmap
+$ mkdir sharedFolder
+$ ls sharedFolder/ 
+\end{lstlisting}
+
+    \item Cambiar el propietario de la carpeta a nadie.
+    
+\begin{lstlisting}[language=bash,style=mystyle]    
+$ sudo chown nobody:nogroup sharedFolder/
+\end{lstlisting} 
+
+
+    \item Ver el estado del servidor:
+    
+\begin{lstlisting}[language=bash,style=mystyle]    
+$ sudo /etc/init.d/nfs-kernel-server status
+\end{lstlisting} 
+
+
+    \item Detener el servicio:
+    
+\begin{lstlisting}[language=bash,style=mystyle]    
+$ sudo /etc/init.d/nfs-kernel-server stop
+\end{lstlisting} 
+
+
+    \item Modificar el archivo exports:
+    
+\begin{lstlisting}[language=bash,style=mystyle]    
+$ sudo pico /etc/exports
+\end{lstlisting} 
+
+
+    \item Añadir:
+    
+\begin{lstlisting}[language=bash,style=mystyle]    
+/home/gfnun/sharedFolder/ *(rw,sync,no_subtree_check)
+/home/gfnun/Geant4-10.6/ *(rw,sync,no_subtree_check)
+/home/gfnun/Geant4-10.5/ *(rw,sync,no_subtree_check)
+\end{lstlisting} 
+
+
+
+    \item Volver a la terminal, y hacer que todos los directorios colocados allí se exporten:
+    
+\begin{lstlisting}[language=bash,style=mystyle]    
+$ sudo exportfs -a
+\end{lstlisting} 
+
+
+    \item Verificar:
+    
+\begin{lstlisting}[language=bash,style=mystyle]    
+$ sudo exportfs
+\end{lstlisting} 
+
+
+    \item Salida en la terminal:
+    
+\begin{lstlisting}[language=bash,style=mystyle]    
+/home/gfnun/sharedFolder
+		<world>
+/home/gfnun/Geant4-10.6
+		<world>
+/home/gfnun/Geant4-10.5
+		<world>
+\end{lstlisting} 
+
+
+    \item En los esclavos:
+    
+\begin{lstlisting}[language=bash,style=mystyle]    
+$ sudo apt-get install nfs-common portmap
+$ mkdir -p sharedFolder/
+$ ls sharedFolder
+$ mkdir -p Geant4-10.6/
+$ ls sharedFolder
+\end{lstlisting} 
+
+
+    \item En el maestro iniciar el servidor:
+    
+\begin{lstlisting}[language=bash,style=mystyle]    
+$ sudo /etc/init.d/nfs-kernel-server start
+\end{lstlisting} 
+
+
+    \item Ver el estado:
+    
+\begin{lstlisting}[language=bash,style=mystyle]    
+$ sudo /etc/init.d/nfs-kernel-server status
+\end{lstlisting} 
+
+    \item Ahora compartir las carpetas en cada esclavo, por ejemplo para el esclavo 1 (\emph{slave1}):
+    
+\begin{lstlisting}[language=bash,style=mystyle] 
+$ ssh slave1
+$ sudo mount master:/home/gfnun/sharedFolder sharedFolder/
+$ sudo mount master:/home/gfnun/Geant4-10.6/ Geant4-10.6/
+$ sudo mount master:/home/gfnun/Geant4-10.5/ Geant4-10.5/
+\end{lstlisting} 
+
+
+    \item Verificar que se esta compartiendo:
+    
+\begin{lstlisting}[language=bash,style=mystyle]    
+$ df -h
+\end{lstlisting}
+
+
+    \item La salida debería ser:
+    
+\begin{lstlisting}[language=bash,style=mystyle]    
+master:/home/gfnun/sharedFolder               723G  440G  247G  65% /home/gfnun/sharedFolder
+master:/home/gfnun/Geant4-10.6                723G  440G  247G  65% /home/gfnun/Geant4-10.6
+master:/home/gfnun/Geant4-10.6                723G  440G  247G  65% /home/gfnun/Geant4-10.5
+\end{lstlisting} 
+
+
+    \item En uno de los esclavos podemos probar que se comparten los archivos:
+    
+\begin{lstlisting}[language=bash,style=mystyle]    
+$ cd sharedFolder/
+$ touch test.txt
+\end{lstlisting} 
+
+y verificar que se vea desde el maestro.
+
+
+\end{enumerate}
+
+
+
+\newpage

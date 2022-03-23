@@ -1,0 +1,232 @@
+\section{Instalación de Geant4}
+\subsection{Instalación de prerrequisitos}
+
+\begin{itemize}
+    \item \textbf{CLHEP}
+    \url{http://proj-clhep.web.cern.ch/proj-clhep/clhep23.html} \\
+leer el archivo README.txt luego crear una carpeta Build y una install dentro de la carpeta build hacer:
+
+\begin{lstlisting}[language=bash,style=mystyle]
+cmake -DCMAKE_INSTALL_PREFIX=<install_dir> <source_code_dir>
+cmake --build . --config RelWithDebInfo
+cmake --build . --target install
+\end{lstlisting} 
+
+
+
+
+    \item \textbf{Zlib}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+\begin{lstlisting}[language=bash,style=mystyle]
+sudo apt install zlib1g-dev 
+\end{lstlisting}     
+    
+    
+    \item \textbf{QT}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+\begin{lstlisting}[language=bash,style=mystyle]
+sudo apt install qt4-default
+\end{lstlisting}      
+    
+    
+    \item \textbf{OpenGL}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+\begin{lstlisting}[language=bash,style=mystyle]
+sudo apt-get install libglu1-mesa-dev freeglut3-dev mesa-common-dev
+\end{lstlisting}      
+    
+    
+    \item \textbf{ray tracer}%%%%%%%%%%%%%%%%%555
+    
+\begin{lstlisting}[language=bash,style=mystyle]
+sudo apt install povray
+\end{lstlisting}     
+    
+    
+    \item \textbf{X11 libraries}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+\begin{lstlisting}[language=bash,style=mystyle]
+sudo apt-get install xorg-dev
+\end{lstlisting}  
+
+
+    \item \textbf{X11 libraries}%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+\begin{lstlisting}[language=bash,style=mystyle]
+sudo apt-get install xorg-dev
+\end{lstlisting} 
+
+
+    \item \textbf{g++ y gcc}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+\begin{lstlisting}[language=bash,style=mystyle]
+sudo apt-get update -y && \
+
+sudo apt-get install -y wget g++-5 gcc-5 cmake libexpat1-dev vim cmake-curses-gui freeglut3 freeglut3-dev mesa-utils python libx11-dev libxmu-dev expat && \
+
+sudo apt-get install -y libfontconfig1-dev libfreetype6-dev libxcursor-dev libxext-dev libxfixes-dev libxft-dev libxi-dev libxrandr-dev libxrender-dev && \
+
+sudo apt-get install libssl-dev
+\end{lstlisting} 
+
+
+\end{itemize}{}
+
+
+\newpage
+
+\subsection{Instalación de Geant4}
+
+\begin{enumerate}
+    \item Creación de carpetas donde estará alojada la instalación
+    
+\begin{lstlisting}[language=bash,style=mystyle]
+
+$ cd $HOME
+$ sudo mkdir -p $HOME/Geant4-10.6/src 
+$ sudo mkdir -p $HOME/Geant4-10.6/build 
+$ sudo mkdir -p $HOME/Geant4-10.6/install 
+$ sudo mkdir -p $HOME/Geant4-10.6/data 
+
+\end{lstlisting}
+    
+    \item Descarga de Geant4:
+    
+\begin{lstlisting}[language=bash,style=mystyle]
+
+$ G4_VERSION="10.06.p01"
+$ QT_VERSION="4.8.7"
+$ sudo wget http://cern.ch/geant4-data/releases/geant4.${G4_VERSION}.tar.gz
+$ sudo tar xf geant4.${G4_VERSION}.tar.gz -C $HOME/Geant4-10.6/src
+$ sudo rm geant4.${G4_VERSION}.tar.gz 
+
+\end{lstlisting}     
+
+
+    \item Compilación:
+    
+\begin{lstlisting}[language=bash,style=mystyle]
+
+$ cd $HOME/Geant4-10.6/build
+$ cmake -DCMAKE_INSTALL_PREFIX=$HOME/Geant4-10.6/install \
+      -DGEANT4_USE_OPENGL_X11=ON \
+      -DQT_QMAKE_EXECUTABLE=/usr/local/Trolltech/Qt-${QT_VERSION}/bin/qmake \
+      -DGEANT4_USE_QT=OFF \
+      -DGEANT4_INSTALL_DATA=ON \
+      -DGEANT4_INSTALL_DATADIR=$HOME/Geant4-10.6/data \
+      -DGEANT4_BUILD_MULTITHREADED=ON \
+      -DGEANT4_INSTALL_EXAMPLES=ON \
+      ../src/geant4.${G4_VERSION}
+      
+$ make -j`nproc` 
+
+\end{lstlisting}     
+
+    
+    \item Instalación:
+
+\begin{lstlisting}[language=bash,style=mystyle]
+
+$ sudo make install
+ 
+\end{lstlisting}     
+
+    \item Cargar varibles de entorno:
+
+\begin{lstlisting}[language=bash,style=mystyle]
+
+$ echo "export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/Trolltech/Qt-${QT_VERSION}/lib" >> $HOME/.bashrc
+$ echo "source $HOME/Geant4-10.6/install/bin/geant4.sh" >> $HOME/.bashrc
+
+
+\end{lstlisting}     
+
+
+    \item Verificar instalación y configuración
+
+
+\begin{lstlisting}[language=bash,style=mystyle]
+
+$ ./geant4-config --help
+ 
+\end{lstlisting} 
+
+\item Por último crear variables de entorno:
+
+
+\begin{lstlisting}[language=bash,style=mystyle]
+echo "source $HOME/geant4/install/bin/geant4.sh" >> $HOME/.bashrc
+\end{lstlisting} 
+
+\end{enumerate}
+
+\newpage
+
+\subsubsection{Configurar variables de entorno para Geant4}
+
+\begin{enumerate}
+    \item Abrir el archivo bashrc:
+    
+\begin{lstlisting}[language=bash,style=mystyle]
+
+$ sudo nano ~/.bashrc
+
+\end{lstlisting} 
+
+    \item Añadir al final las siguiente líneas:
+    
+\begin{lstlisting}[language=bash,style=mystyle]
+
+export G4ABLADATA=/home/gfnun/Geant4-10.6/install/share/Geant4-10.6.1/data/G4ABLA3.1
+export G4ENSDFSTATEDATA=/home/gfnun/Geant4-10.6/install/share/Geant4-10.6.1/data/G4ENSDFSTATE2.2
+export G4INCLDATA=/home/gfnun/Geant4-10.6/install/share/Geant4-10.6.1/data/G4INCL1.0
+export G4LEDATA=/home/gfnun/Geant4-10.6/install/share/Geant4-10.6.1/data/G4EMLOW7.9.1
+export G4LEVELGAMMADATA=/home/gfnun/Geant4-10.6/install/share/Geant4-10.6.1/data/PhotonEvaporation5.5
+export G4NEUTRONHPDATA=/home/gfnun/Geant4-10.6/install/share/Geant4-10.6.1/data/G4NDL4.6
+export G4PARTICLEXSDATA=/home/gfnun/Geant4-10.6/install/share/Geant4-10.6.1/data/G4PARTICLEXS2.1
+export G4PIIDATA=/home/gfnun/Geant4-10.6/install/share/Geant4-10.6.1/data/G4PII1.3
+export G4REALSURFACEDATA=/home/gfnun/Geant4-10.6/install/share/Geant4-10.6.1/data/RealSurface2.1.1
+export G4SAIDXSDATA=/home/gfnun/Geant4-10.6/install/share/Geant4-10.6.1/data/G4SAIDDATA2.0
+
+\end{lstlisting}
+\end{enumerate}
+
+
+\subsubsection{Ejecutar Ejemplo B1}
+
+\begin{enumerate}
+
+    \item Ir a la carpeta del código fuente del ejemplo y crear una carpeta para la compilación.
+    
+\begin{lstlisting}[language=bash,style=mystyle]
+
+$ cd /home/gfnun/Geant4-10.6/src/geant4.10.06.p01/examples/basic/B1
+$ mkdir build-B1 
+
+\end{lstlisting}
+
+    \item Compilar y ejecutar:
+    
+\begin{lstlisting}[language=bash,style=mystyle]
+
+$ cmake –DGeant4_DIR=/home/gfnun/Geant4-10.6/install/lib/Geant4-10.6.1 /home/gfnun/Geant4-10.6/src/geant4.10.06.p01/examples/basic/B1
+$ make -j4
+$ ./exampleB1
+
+\end{lstlisting}  
+
+\end{enumerate}
+
+\newpage
+
+
+
+
+
+
+
+
+
+
+    
+    

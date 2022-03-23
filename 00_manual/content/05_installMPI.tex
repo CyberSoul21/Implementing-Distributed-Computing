@@ -1,0 +1,100 @@
+\section{Instalación de Open-MPI}
+
+Descargar open-mpi desde \url{https://www.open-mpi.org/software/ompi/v4.0/}, se descarga el archivo openmpi-4.0.3.tar.gz. Dejarlo en el directorio:
+
+\begin{lstlisting}[language=bash,style=mystyle]    
+$ pwd
+/home/gfnun/
+\end{lstlisting} 
+
+
+\begin{enumerate}
+
+    \item Descomprimir en la carpeta sharedFolder/ :
+\begin{lstlisting}[language=bash,style=mystyle]    
+$ cp openmpi-4.0.3.tar.gz sharedFolder/
+$ cd sharedFolder/
+$ mkdir openmpi-install/
+$ tar -xzf openmpi-4.0.3.tar.gz   
+\end{lstlisting}
+ 
+    \item Compilar:
+\begin{lstlisting}[language=bash,style=mystyle]  
+$ cd openmpi-4.0.3/
+$ mkdir build
+$ cd build
+$ ../configure --prefix=/home/gfnun/sharedFolder/openmpi-install/ --enable-mpi-cxx --enable-orterun-prefix-by-default 
+$ sudo make -j4      
+\end{lstlisting}
+    
+    \item Instalar:
+\begin{lstlisting}[language=bash,style=mystyle] 
+$ sudo make install
+$ sudo ldconfig      
+\end{lstlisting}
+    
+    \item Para usar open mpi instalado en la carpeta sharedFolder/ cargamos las variables de entorno:
+\begin{lstlisting}[language=bash,style=mystyle]
+$ export PATH=/home/gfnun/sharedFolder/openmpi-install/bin:$PATH
+$ export LD_LIBRARY_PATH=/home/gfnun/sharedFolder/openmpi-install/lib:$LD_LIBRARY_PATH
+\end{lstlisting}   
+    
+    \item Si se desea, se puede dejar en el bashrc:
+\begin{lstlisting}[language=bash,style=mystyle]
+echo "export PATH=/home/gfnun/sharedFolder/openmpi-install/bin:$PATH" >> $HOME/.bashrc
+echo "export LD_LIBRARY_PATH=/home/gfnun/sharedFolder/openmpi-install/lib:$LD_LIBRARY_PATH" >> $HOME/.bashrc
+\end{lstlisting}
+
+así cargara automáticamente las variables de entorono de mpi cada vez que se inicie sesión.
+    
+\end{enumerate}
+
+
+
+\subsection{Configurar Cluster}
+
+Crear un archivo en donde vamos a listar los nodos del \emph{clúster} (nodos se refiere a cada máquina del \emph{clúster}). En este archivo se indica los procesos a usar por máquina. 
+
+A continuación se presentan ejemplos del archivo: 
+
+\begin{itemize}
+    \item Creación del Archivo:
+\begin{lstlisting}[language=bash,style=mystyle]
+sudo touch my_hosts 
+\end{lstlisting}
+
+
+    \item Añadir las siguientes líneas, indicando el número de hilos a usar por cada nodo:
+    
+\begin{lstlisting}[language=bash,style=mystyle2]
+master slots=1
+slave1 slots=2
+slave2 slots=2
+\end{lstlisting}
+
+    \item Ejecutar ejemplo:
+\begin{lstlisting}[language=bash,style=mystyle2]
+$ cd ..
+$ cd examples
+$ sudo mpicc hello_c.c -o hello_c
+$ mpiexec -np 4 --hostfile my_hosts ./hello_cslave1
+slave2
+\end{lstlisting}
+
+\end{itemize}
+
+
+
+\subsection{Ejemplo de Comandos MPI}
+
+
+\begin{lstlisting}[language=bash,style=mystyle2]
+mpirun -np 6 --hostfile my_hosts openmpi-4.0.3/examples/hello_c | sort
+mpirun -H slave1,slave2 openmpi-4.0.3/examples/hello_c | sort
+mpirun -H master,slave1,slave2 openmpi-4.0.3/examples/hello_c | sort
+mpirun -H master,slave1,slave2,slave2 openmpi-4.0.3/examples/hello_c | sort
+mpirun -H master,slave1,slave2 -npernode 2 openmpi-4.0.3/examples/hello_c | sort
+\end{lstlisting} 
+
+
+\newpage

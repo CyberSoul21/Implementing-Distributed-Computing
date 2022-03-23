@@ -1,0 +1,15 @@
+#MPI Cluster Setup     NAME     Access  Cluster  Threads
+192.168.9.150 master  MrHerbert    ok     Yes       8
+192.168.9.140 slave1  mauricio     ok     Yes       8
+192.168.9.134 slave2  Pietro       ok     Yes       8 
+192.168.9.107 slave3  Rebeca       ok     Yes       8
+192.168.9.138 slave4  Babilonia    ok     Yes       8
+192.168.9.125 slave5  mrbrown      ok     No        8
+192.168.9.124 slave6  Nigromanta   ok     Yes       16
+192.168.9.118 slave7  ursula       ok     No        8
+192.168.9.120 slave8  apolinar     ok  	  Yes       8
+192.168.9.133 slave9  margote      ok     Yes       8
+192.168.9.114 slave10 gerineldo    ok     No        8
+192.168.9.123 slave11 moscote      ok     Yes       8
+
+Threads available: 80

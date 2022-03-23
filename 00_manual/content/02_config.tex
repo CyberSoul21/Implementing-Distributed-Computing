@@ -1,0 +1,232 @@
+\section{Configuraciones básicas de cada equipo}
+
+\subsection{Configuración de usuarios de cada máquina}
+Todas las máquinas se configuran con el mismo nombre de usuario, así en cada máquina
+abrimos una terminal y ejecutamos los siguientes comandos:
+
+\begin{enumerate}
+    \item Entrar al modo root:
+    
+\begin{lstlisting}[language=bash, style=mystyle]
+$ ifconfig -a
+\end{lstlisting} 
+
+
+    \item Agregar el usuario:
+    
+\begin{lstlisting}[language=bash, style=mystyle]
+$ adduser gfnun
+\end{lstlisting} 
+
+Se solicitara el ingreso de la clave y unos datos adicionales los cuales deberan
+ingresarse si se desea, de lo contrario solo hacer \textit{enter} y continuar.
+    
+
+    \item Comprobar que se creo el usuario:
+    
+\begin{lstlisting}[language=bash, style=mystyle]
+$ cd ~
+$ ls /home
+\end{lstlisting}
+
+    \item Se debera ver la carpeta del usuario, adicional ingresamos para comprobar:
+    
+\begin{lstlisting}[language=bash, style=mystyle]
+$ ssh gfnun@0.0.0.0
+\end{lstlisting}
+
+    \item Salir y se le da permisos de administrador, desde el root:
+    
+\begin{lstlisting}[language=bash, style=mystyle]
+$ exit
+$ adduser gfnun sudo
+\end{lstlisting}
+    
+\end{enumerate}
+
+
+
+\subsection{Configurar ip estática}
+
+\begin{enumerate}
+    
+    \item Comprobar las interfaces de red que tiene el equipo.
+    
+\begin{lstlisting}[language=bash,style=mystyle]
+$ ifconfig -a
+\end{lstlisting}
+
+
+    \item Edita el archivo de configuración de las interfaces de red con el siguiente comando:
+    
+\begin{lstlisting}[]
+sudo nano /etc/network/interfaces
+\end{lstlisting} 
+
+    \item En este caso se va configurar la interfaz eth0,
+    
+\begin{lstlisting}[language=bash, style=mystyle]
+# Configuración de dirección IP fija para el interfaz eth0
+auto eth0
+iface eth0 inet static
+address 192.168.1.50
+netmask 255.255.255.0
+network 192.168.1.0
+broadcast 192.168.1.255
+gateway 192.168.1.1
+\end{lstlisting} 
+
+
+    \item Reiniciar las interfaces de red del equipo:
+    
+\begin{lstlisting}[language=bash,style=mystyle]
+$ sudo /etc/init.d/networking restart
+\end{lstlisting} 
+
+
+    \item Alternativamente:
+    
+\begin{lstlisting}[language=bash,style=mystyle]
+$ sudo ifconfig eth0 down 
+$ sudo ifconfig eth0 up
+\end{lstlisting} 
+
+\end{enumerate}
+
+
+
+\subsection{Configurar archivo \emph{Hosts}}
+
+Configurar el archivo hosts con las ip de los PC's con los que se va hacer el \emph{cluśter} (ver sección configuraciones básicas de cada equipo, para configuración de ip estática). 
+
+Para ingresar al archivo:
+
+\begin{lstlisting}[language=bash,style=mystyle2]
+$ sudo nano /etc/hosts
+\end{lstlisting} 
+
+El archivo \emph{hosts} debe quedar así. En este caso tenemos dos esclavos y un maestro.
+
+\begin{lstlisting}[language=bash,caption={Archivo hosts en el maestro},style=mystyle2]
+127.0.0.1       localhost
+127.0.1.1       MrHerbert.gfnun.unal.edu.co     MrHerbert
+
+#MPI Cluster Setup
+192.168.9.144 master
+192.168.9.135 slave1
+192.168.9.109 slave2
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+
+\end{lstlisting} 
+
+
+También se debe configurar el de cada esclavo así:
+
+\begin{lstlisting}[language=bash,caption={Archivo hosts esclavo 1},style=mystyle2]
+#MPI Cluster Setup
+192.168.9.144 master
+192.168.9.109 slave1
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+
+\end{lstlisting} 
+
+Para el esclavo 2:
+
+\begin{lstlisting}[language=bash,caption={Archivo esclavo 1},style=mystyle2]
+#MPI Cluster Setup
+192.168.9.144 master
+192.168.9.109 slave2
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+
+\end{lstlisting} 
+
+
+
+\subsection{Configurar ssh}
+Lo siguiente es configurar los accesos a través de ssh entre las máquinas para que no
+solicite clave cada vez que la máquina maestro (master) acceda a cada esclavo (slave1, slave2..etc)
+
+\begin{enumerate}
+    \item En el Master, generar la llave rsa:
+    
+\begin{lstlisting}[language=bash,style=mystyle]
+$ ssh-keygen -t rsa
+\end{lstlisting} 
+
+    \item Verificar si se tiene el archivo authorized\_keys, hacer esto para cada nodo:
+    
+\begin{lstlisting}[language=bash,style=mystyle]
+$ ls -l .ssh/
+\end{lstlisting}
+
+    \item Si no se encuentra, crearlo:
+\begin{lstlisting}[language=bash,style=mystyle]
+$ touch ~/.ssh/authorized_keys
+\end{lstlisting} 
+
+    \item Generar permisos al archivo:
+\begin{lstlisting}[language=bash,style=mystyle]
+$ chmod 600 ~/.ssh/authorized_keys
+\end{lstlisting}
+
+    \item Copiar llaves generadas desde el master a los esclavos:
+\begin{lstlisting}[language=bash,style=mystyle]
+$ scp .ssh/id_rsa.pub gfnun@slave1:.ssh/authorized_keys
+$ scp .ssh/id_rsa.pub gfnun@slave2:.ssh/authorized_keys
+\end{lstlisting}
+
+    \item También se debe copiar en el mismo master para que no solicite clave al hacer ssh sobre el mismo:
+\begin{lstlisting}[language=bash,style=mystyle]
+$ cp ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys
+\end{lstlisting}
+
+    \item Para el esclavo dos
+\begin{lstlisting}[language=bash,style=mystyle]
+$ scp .ssh/id_rsa.pub gfnun@slave2:.ssh/authorized_keys
+\end{lstlisting} 
+
+Esto es importante ya que con la implementación de mpi a veces se desea usar el mismo master para ejecutar aplicaciones.
+
+    \item Así no pedirá contraseña cada vez que se va ingresar a cada nodo desde el master, bastara escribir algo así:
+    
+\begin{lstlisting}[language=bash,style=mystyle]
+$ ssh slave2
+\end{lstlisting} 
+    
+\end{enumerate}
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+

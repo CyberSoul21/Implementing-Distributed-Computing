@@ -1,0 +1,68 @@
+\section{Instalación y configuración de MPICH}
+
+\subsection{Instalando MPICH2}
+
+\begin{itemize}
+
+
+    \item Descargar MPICH \url{http://www.mpich.org/downloads/}
+    
+
+    \item Descomprimir
+\begin{lstlisting}[language=bash,style=mystyle]     
+tar -xzf mpich-3.3.2.tar.gz 
+\end{lstlisting}   
+
+    \item Compilar e instalar 
+\begin{lstlisting}[language=bash,style=mystyle]    
+cd mpich-3.3.2
+sudo mkdir build
+cd build
+sudo mkdir ../mpich-install
+  
+sudo ../configure --prefix=/home/gfnun/mpich-install/ --disable-fc --disable-f77 --enable-shared
+\end{lstlisting} 
+
+
+\item Aparece el siguiente error:
+
+\begin{lstlisting}[language=bash,style=mystyle2]  
+configure: error: No Fortran 77 compiler found. If you dont need to build any Fortran programs, you can disable Fortran support using --disable-fortran. If you do want to build Fortran programs, you need to install a Fortran compiler such as gfortran or ifort before you can proceed.
+\end{lstlisting} 
+
+
+
+\item Corrección error, debido a que no está instalado Fortran, para este caso no se necesita, por ende se coloca la bandera de desactivación.
+
+\begin{lstlisting}[language=bash,style=mystyle]    
+sudo ../configure --prefix=/home/gfnun/mpich-install/ --disable-fc --disable-f77 --enable-shared --disable-fortran 
+\end{lstlisting} 
+
+
+
+\item Aparece el mensaje:
+
+\begin{lstlisting}[language=bash,style=mystyle2]    
+Configuration completed.
+\end{lstlisting} 
+
+
+
+\item Compilación e instalación.
+
+\begin{lstlisting}[language=bash,style=mystyle]      
+sudo make
+sudo make install
+\end{lstlisting} 
+
+
+\item Hacer la siguiente exportación de las variables de entorno con las que se va a trabajar.
+
+\begin{lstlisting}[language=bash,style=mystyle]     
+export PATH=/home/gfnun/sharedFolder/mpich-install/bin:$PATH
+export LD_LIBRARY_PATH=/home/gfnun/sharedFolder/mpich-install/lib:$LD_LIBRARY_PATH 
+\end{lstlisting} 
+
+
+
+\end{itemize}

@@ -1,0 +1,171 @@
+\documentclass{article}
+\usepackage[spanish, es-tabla]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amsthm, amsfonts}
+\usepackage{graphicx}
+\usepackage{cite}
+\usepackage{float}
+%\usepackage{listings}
+\usepackage{tabularx}
+%\usepackage{multirow}
+\usepackage{colortbl}
+%\renewcommand{\refname}{Referencias}
+\usepackage{subfig}
+\usepackage{booktabs}
+\usepackage{cite}
+\usepackage[makeroom]{cancel}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\urlstyle{same}
+
+\usepackage[
+    papersize={21.7cm,27.9cm},
+    top=2.54cm,
+    bottom=2.54cm,
+    left=2.54cm,
+    right=2.54cm
+]{geometry}
+
+\renewcommand{\citedash}{ -- } 
+
+\renewcommand{\tablename}{\small{\textsc{Tabla}}}
+
+\usepackage{xcolor}
+\usepackage{listings}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{backcolour}{rgb}{0.66,0.66,0.66}
+\definecolor{darkpastelgreen}{rgb}{0.01, 0.75, 0.24}
+\definecolor{electricgreen}{rgb}{0.0, 1.0, 0.0}
+\definecolor{gainsboro}{rgb}{0.86, 0.86, 0.86}
+\definecolor{bostonuniversityred}{rgb}{0.8, 0.0, 0.0}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{gainsboro},   
+    commentstyle=\color{yellow},
+    keywordstyle=\color{bostonuniversityred},
+    numberstyle=\tiny\color{black},
+    stringstyle=\color{blue},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    morekeywords = [2]{sudo,chmod,touch,scp,ssh,ls,ls -l,mkdir,mv,make,cmake,apt,install,df,-h,chown,cd,which},
+    keywordstyle = [2]\color{bostonuniversityred}
+}
+
+
+\lstdefinestyle{mystyle2}{
+    backgroundcolor=\color{gainsboro},   
+    commentstyle=\color{yellow},
+    %keywordstyle=\color{bostonuniversityred},
+    numberstyle=\tiny\color{black},
+    stringstyle=\color{blue},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+   % morekeywords = [2]{sudo,make,cmake},
+   %keywordstyle = [2]\color{bostonuniversityred}
+}
+
+
+
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    %{\includegraphics[width=0.2\textwidth]{logo}\par}
+    %\vspace{1cm}
+    %{\bfseries\LARGE Título del proyecto \par}
+    %\vspace{1cm}
+    %{\scshape\Large Facultad de Ingenier\'ia Industrial \par}
+    \vspace{4cm}
+    {\scshape\Huge Manual de implementación de un esquema de computación distribuida para Geant4 \par}
+    \vspace{3cm}
+  {\itshape\Large Grupo de Física Nuclear \par}
+    \vfill
+    {\Large Autor: \par}
+     \vspace{0.5cm}
+    {Wilson Javier Almario Rodriguez.}\\
+    \vfill
+    {\Large Universidad Nacional De Colombia \par}
+    {\Large Grupo de física nuclear \par}
+    {\Large Bogota, Colombia \par}
+    {\Large Junio 2020 \par}
+    
+\end{titlepage}
+
+
+\tableofcontents
+
+\clearpage
+
+%\input{content/0_pasos}
+\input{content/00_Introduccion.tex}
+\input{content/01_install.tex}
+%\input{content/02_tools.tex}
+%\input{content/03_lab.tex}
+\input{content/02_config.tex}
+\input{content/03_install_nfs.tex}
+%\input{content/04_install_MPICH.tex}
+\input{content/05_installMPI.tex}
+\input{content/06_installG4mpi.tex}
+\input{content/07_exampleEXMPI01.tex}
+\input{content/08_configurateAPP.tex}
+\input{content/09_rendimiento.tex}
+%\input{content/08_configSimuMPI.tex}
+%\input{content/09_error}
+%\input{content/10_avance1.tex}
+%\input{content/10_avance2.tex}
+%\input{content/10_avance3.tex}
+
+
+
+%\input{content/References.tex}
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

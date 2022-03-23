@@ -1,0 +1,128 @@
+\section{Ejecutando ejemplos de geant4 en el sistema distribuido}
+
+\subsection{Ejemplo exMPI01}
+
+En esta sección se va ejecutar el ejemplo exMP01, ubicado en:
+
+\begin{lstlisting}[language=bash,style=mystyle]
+cd /home/gfnun/geant4.10.06/src/geant4.10.06.p01/examples/extended/parallel/MPI/examples/exMPI01
+\end{lstlisting}
+
+La documentación nos indica como debemos compilar el ejemplo.
+\begin{lstlisting}[language=bash,style=mystyle]
+mkdir build
+cd build
+cmake -DG4mpi_DIR=<where-G4mpi-wasintalled>/lib[64]/G4mpi -DCMAKE_CXX_COMPILER=mpicxx \
+      -DGeant4_DIR=<your Geant4 install path>/lib[64]/Geant4-V.m.n <path-to-source>
+      (V.m.n is the version of Geant4, eg. Geant4-9.6.0)
+make
+make install
+\end{lstlisting}
+
+Para este caso el ejemplo se compila así:
+
+\begin{lstlisting}[language=bash,style=mystyle]
+$ mkdir build
+$ cd build
+$ sudo cmake -DG4mpi_DIR=/home/gfnun/Geant4-10.6/geant4-mpi/lib/G4mpi-10.6.1 -DCMAKE_CXX_COMPILER=mpicxx \
+      -DGeant4_DIR=/home/gfnun/Geant4-10.6/install/lib/Geant4-10.6.1 /home/gfnun/Geant4-10.6/src/geant4.10.06.p01/examples/extended/parallel/MPI/examples/exMPI01
+$ sudo make
+$ sudo make install
+\end{lstlisting}
+
+Ejecutar:
+
+\begin{lstlisting}[language=bash,style=mystyle]
+$ cd build
+$ mpiexec -np 4 ./exMPI01
+\end{lstlisting}
+
+\subsection{Ejemplo exMPI04}
+
+Compilar, para compilar se debe hacer desde el compilador de open mpi instalado en la carpeta sharedFolder/
+
+\begin{lstlisting}[language=bash,style=mystyle]
+$ mkdir build
+$ cd build
+$ sudo cmake -DG4mpi_DIR=/home/gfnun/Geant4-10.6/geant4-mpi/lib/G4mpi-10.6.1 -DCMAKE_CXX_COMPILER=/home/gfnun/sharedFolder/openmpi-install/bin/mpicxx \
+      -DGeant4_DIR=/home/gfnun/Geant4-10.6/install/lib/Geant4-10.6.1 /home/gfnun/Geant4-10.6/src/geant4.10.06.p01/examples/extended/parallel/MPI/examples/exMPI04
+$ make
+$ make install
+\end{lstlisting}
+
+Ejecutar con Open mpi:
+
+Exportar variables, en este caso la instalación de open mpi se realizó en sharedFolder:
+
+\begin{lstlisting}[language=bash,style=mystyle]
+export PATH=/home/gfnun/sharedFolder/openmpi-install/bin:$PATH
+export LD_LIBRARY_PATH=/home/gfnun/sharedFolder/openmpi-install/lib:$LD_LIBRARY_PATH 
+\end{lstlisting}
+
+De esta manera se ejecuta en la máquina local:
+
+\begin{lstlisting}[language=bash,style=mystyle]
+$ cd build
+$ mpiexec -n 4 ./exMPI04
+\end{lstlisting}
+
+
+
+
+% \begin{itemize}
+
+%     \item \textbf{Usando MPICH:}
+    
+% Nos aseguramos de usar MPICH
+
+% \begin{lstlisting}[language=bash,style=mystyle]     
+% export PATH=/home/gfnun/sharedFolder/mpich-install/bin:$PATH
+% export LD_LIBRARY_PATH=/home/gfnun/sharedFolder/mpich-install/lib:$LD_LIBRARY_PATH 
+% \end{lstlisting}     
+
+% Verificamos:
+
+% \begin{lstlisting}[language=bash,style=mystyle]     
+% which mpiexec
+% \end{lstlisting} 
+
+% Y debe arrojarnos el directorio desde donde se está ejecutando esta instrucción en este caso el directorio donde esta instalado MPICH.
+% \\
+% Creamos el archivo en dónde especificamos como usar los procesadores. Lo llamaremos \textbf{hostfile}, aquí le indicamos usar 1 procesador en el master, 4 para el escalvo 1 y 5 para el esclavo2.
+
+% \begin{lstlisting}[language=bash,style=mystyle]     
+% master:1
+% slave1:4
+% slave2:5
+% \end{lstlisting}  
+
+% En consola ejecutamos el siguiente comando:
+% \begin{lstlisting}[language=bash,style=mystyle]     
+% mpirun -f hostfile -n 10 ./exMPI01
+% \end{lstlisting} 
+
+% Si se desea especificar:
+% \begin{lstlisting}[language=bash,style=mystyle]     
+% mpirun -hosts slave1,slave2^Cn 2 ./exMPI01
+% \end{lstlisting} 
+
+
+
+%     \item \textbf{Usando open-MPI:}
+    
+% Creamos el archivo en dónde especificamos como usar los procesadores. Lo llamaremos \textbf{hostfile}, aquí le indicamos usar 1 procesador en el master, 4 para el escalvo 1 y 5 para el esclavo2.
+
+% \begin{lstlisting}[language=bash,style=mystyle]     
+% master slots=1
+% slave1 slots=2
+% slave2 slots=2
+% \end{lstlisting}     
+    
+% \end{itemize}
+
+\newpage
+
+
+
+
+

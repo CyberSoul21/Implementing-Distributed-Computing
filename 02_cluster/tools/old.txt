@@ -1,0 +1,12 @@
+master MrHerbert 30:5a:3a:4a:7b:43 192.168.9.150 
+slave1 mauricio 34:17:eb:c7:e4:90 192.168.9.138 
+slave2 pietro 18:03:73:b8:d9:a6 192.168.9.133 
+slave3 rebeca 18:03:73:d6:83:2b 
+slave4 babilonia 34:17:eb:c8:2d:d4 192.168.9.142 
+slave5 mrbrown 30:5a:3a:47:7e:fb 192.168.9.125 
+slave6 nigromanta 00:25:64:f8:a2:9a 192.168.9.124 
+slave7 ursula 18:66:da:49:eb:67 192.168.9.118 
+slave8 apolinar f8:b1:56:cc:26:40 192.168.9.120 
+slave9 margote 18:66:da:49:e1:5d 192.168.9.134 
+slave10 gerineldo f8:b1:56:cc:26:28 192.168.9.147 
+slave11 moscote NONE 192.168.9.126 

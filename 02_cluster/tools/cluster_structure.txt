@@ -1,0 +1,13 @@
+master,MrHerbert,30:5A:3A:4A:7B:43
+slave1,mauricio,34:17:EB:C7:E4:90
+slave2,pietro,18:03:73:B8:D9:A6
+slave3,rebeca,18:03:73:D6:83:2B
+slave4,babilonia,34:17:EB:C8:2D:D4
+slave5,mrbrown,30:5A:3A:47:7E:FB
+slave6,nigromanta,00:25:64:F8:A2:9A
+slave7,ursula,18:66:DA:49:EB:67
+slave8,apolinar,F8:B1:56:CC:26:40
+slave9,margote,18:66:DA:49:E1:5D
+slave10,gerineldo,F8:B1:56:CC:26:28
+slave11,moscote,18:66:DA:49:E1:BD
+slave12,petra,30:5A:3A:47:7E:D4
