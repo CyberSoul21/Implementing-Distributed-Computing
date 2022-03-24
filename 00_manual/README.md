@@ -7,43 +7,43 @@
 - Network File System, NFS
 - Optional: ROOT for histogramming/analysis
 
-## Pasos para la implementación
+## Steps for implementation
 
-**Configurar máquias**
-- Configuración de usuarios de cada máquina
-- Configurar ip estática
-- Editar archivos hosts
-- Configurar ssh
+**Configure machines**
+- Create and configure users for each one.
+- Configure static IP
+- Configure hosts files
+- Configure ssh
 
-**Instalación de Geant4**
-- Instalando pre requisitos
-- Instalando Geant4
-- Ejecutar Ejemplo B1
+**Installing Geant4**
+- Install prerequisites
+- Install Geant4
+- Execute example B1
 
-**Compilando G4mpi**
-- Compilación G4mpi
-- Ejecutando ejemplo exMP01
+**Compiling G4mpi**
+- Compile G4mpi
+- Executing exMP01
 
-**Configurando servidor NFS**
-- Configuración servidor en el maestro
-- Configuración en los esclavos
-- Prueba NFS
+**Configure the NFS server**
+- Setting up serve on master machine
+- Setting up on slavers machines
+- Test the NFS server
 
-**Instalación Open-mpi**
-- Configuración
-- Instalación
-- Ejecutando ejemplos
+**Install Open-mpi**
+- Setting up
+- Installation
+- Executing examples
 
-**Ejecutando ejemplo en el sistema distribuido**
-- Configurando variables de entorno
-- Compilando ejemplo exMPI01
-- Ejecutando ejemplo exMPI01
+**Executing example on cluster**
+- Set environment variables
+- Compile example exMPI01
+- Execute example exMPI01
 
-**Configurar una aplicación para uso con MPI**
-- Configuración sesión con G4mpi
-- Configuración CMakeLists.txt
-- Configuración Clúster
-- Comando Ejecución con Open mpi
+**Set up a Geant4 application with MPI**
+- Configure G4mpi session
+- Configure CMakeLists.txt
+- Set up cluster
+- Commands to execute with Open-mpi
 
 
 ## Configurar máquinas 
