@@ -1,11 +1,11 @@
-#  Manual de implementación de un esquema de computación distribuida para Geant4 
+#  Building a Distributed Computing System for Geant4
 
-## Requisitos
+## Prerequisites
 
-- Distribución Linux basada en debian (32/64 bits)
+- A Debian-based Linux Distribution (32/64 bits)
 - Open MPI (4.0.4) https://www.open-mpi.org/software/ompi/v4.0/
-- Servidor NFS
-- Opcional: ROOT for histogramming/analysis
+- Network File System, NFS
+- Optional: ROOT for histogramming/analysis
 
 ## Pasos para la implementación
 
