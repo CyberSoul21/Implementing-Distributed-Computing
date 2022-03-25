@@ -1,7 +1,7 @@
 #  Building a Distributed Computing System for Geant4
 
-- [Prerequisites]
-- [Configure machines](requisitos)
+- [Prerequisites](#prerequisities)
+- [Configure machines](#Configure-machines)
     - [Create and configure users for each one.]
     - [Configure static IP.]
     - [Configure hosts files.]
