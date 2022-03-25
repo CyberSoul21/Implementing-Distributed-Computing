@@ -1,6 +1,6 @@
 #  Building a Distributed Computing System for Geant4
 
-- [Prerequisites](#prerequisities)
+- [Prerequisites](#prerequisites)
 - [Configure machines](#Configure-machines)
     - [Create and configure users for each one.](#)
     - [Configure static IP.](#)
@@ -32,51 +32,13 @@
    - [Commands to execute with Open-mpi.](#)
 
 
-
+<a name="prerequisites"/>
 ## Prerequisites
 
 - A Debian-based Linux Distribution (32/64 bits)
 - Open MPI (4.0.4) https://www.open-mpi.org/software/ompi/v4.0/
 - Network File System, NFS
 - Optional: ROOT for histogramming/analysis
-
-## Steps for implementation
-
-**Configure machines**
-- Create and configure users for each one.
-- Configure static IP.
-- Configure hosts files.
-- Configure ssh.
-
-**Installing Geant4**
-- Install prerequisites
-- Install Geant4
-- Execute example B1
-
-**Compiling G4mpi**
-- Compile G4mpi
-- Executing exMP01
-
-**Configure the NFS server**
-- Setting up serve on master machine
-- Setting up on slavers machines
-- Test the NFS server
-
-**Install Open-mpi**
-- Setting up
-- Installation
-- Executing examples
-
-**Executing example on cluster**
-- Set environment variables
-- Compile example exMPI01
-- Execute example exMPI01
-
-**Set up a Geant4 application with MPI**
-- Configure G4mpi session
-- Configure CMakeLists.txt
-- Set up cluster
-- Commands to execute with Open-mpi
 
 
 ## Configurar máquinas 
