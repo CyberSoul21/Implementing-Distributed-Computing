@@ -32,10 +32,7 @@
    - [Commands to execute with Open-mpi.](#)
 
 
-<a name="prerequisites"/>
-
-
-## Prerequisites
+## Prerequisites <a name="prerequisites"/>
 
 - A Debian-based Linux Distribution (32/64 bits)
 - Open MPI (4.0.4) https://www.open-mpi.org/software/ompi/v4.0/
