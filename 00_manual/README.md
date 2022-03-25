@@ -1,5 +1,22 @@
 #  Building a Distributed Computing System for Geant4
 
+- [Prerequisites]
+- [Configure machines](requisitos)
+    - [Create and configure users for each one.]
+    - [Configure static IP.]
+    - [Configure hosts files.]
+    - [Configure ssh.]
+    - [No hay acceso a Nicanor (Remoto)](requisitos)
+    - [Hay acceso a Nicanor pero no a la red local](dsf)  
+    - [Hay acceso a Nicanor pero no puedo ingresar a ningun computador vía ssh](sdf)
+    - [Hay acceso a Nicanor pero solo algunos computadores](requisitos)
+    - [Hay acceso a Nicanor y a la red local pero los computadores de la red local no tienen internet](requisitos)
+- [Comandos útiles para la red](requisitos)   
+- [Configuración equipos con Arch linux](requisitos)
+- [Configuración equipos con distribuciones basadas en Debian](requisitos)  
+- [Configuración equipos con Windows](requisitos)  
+- [Tabla con todos los puntos de la red](requisitos)
+
 ## Prerequisites
 
 - A Debian-based Linux Distribution (32/64 bits)
@@ -11,9 +28,9 @@
 
 **Configure machines**
 - Create and configure users for each one.
-- Configure static IP
-- Configure hosts files
-- Configure ssh
+- Configure static IP.
+- Configure hosts files.
+- Configure ssh.
 
 **Installing Geant4**
 - Install prerequisites
