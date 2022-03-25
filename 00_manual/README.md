@@ -2,16 +2,12 @@
 
 - [Prerequisites](#prerequisities)
 - [Configure machines](#Configure-machines)
-    * [Create and configure users for each one.](#)
+    - [Create and configure users for each one.](#)
     - [Configure static IP.](#)
     - [Configure hosts files.](#)
     - [Configure ssh.](#)
 
-- [Comandos útiles para la red](requisitos)   
-- [Configuración equipos con Arch linux](requisitos)
-- [Configuración equipos con distribuciones basadas en Debian](requisitos)  
-- [Configuración equipos con Windows](requisitos)  
-- [Tabla con todos los puntos de la red](requisitos)
+
 
 ## Prerequisites
 
