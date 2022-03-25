@@ -1,15 +1,16 @@
 #  Building a Distributed Computing System for Geant4
 
 - [Prerequisites](#prerequisites)
-- [Configure machines](#Configure-machines)
-    - [Create and configure users for each one.](#)
-    - [Configure static IP.](#)
-    - [Configure hosts files.](#)
-    - [Configure ssh.](#)
-- [Installing Geant4](#)
-    - [Install prerequisites](#)
-    - [Install Geant4](#)
-    - [Execute example B1](#)
+- [Configure machines](#configure-machines)
+    - [Create and configure users for each one.](#configure-machines-1)
+    - [Configure static IP.](#configure-machines-2)
+    - [Configure hosts files.](#configure-machines-3)
+    - [Configure ssh.](#configure-machines-4)
+- [Installing Geant4](#installing-Geant4)
+    - [Install prerequisites](#installing-Geant4-1)
+    - [Install Geant4](#installing-Geant4-2)
+    - [Set environment variables](#installing-Geant4-4)
+    - [Execute example B1](#installing-Geant4-5)
 - [Compiling G4mpi](#)
     - [Compile G4mpi.](#)
     - [Executing exMP01.](#)
@@ -40,9 +41,9 @@
 - Optional: ROOT for histogramming/analysis
 
 
-## Configurar máquinas 
+## Configure machines <a name="configure-machines"/>
 
-### Configuración de usuarios de cada máquina
+### Create and configure users for each one <a name="configure-machines-1"/>
 
 Todas las máquinas se configuran con el mismo nombre de usuario, así en cada máquina 
 abrimos una terminal y ejecutamos los siguientes comandos:
@@ -83,7 +84,7 @@ Ahora le daremos permisos de administrador, desde el root:
 $ adduser gfnun sudo
 ```
 
-### Configurar ip estática
+### Configure static IP <a name="configure-machines-2"/>
 
 Comprobar las interfaces de red que tiene el equipo.
 
@@ -118,7 +119,7 @@ Alternativamente:
 $ sudo ifconfig eth0 down 
 $ sudo ifconfig eth0 up
 ```
-### Editar archivo hosts
+### Configure hosts files <a name="configure-machines-3"/>
 
 Editar el archivo hosts del maestro para colocarle nombre a cada máquina:
 
@@ -145,7 +146,7 @@ ff02::2 ip6-allrouters
 
 ```
 
-### Configurar ssh
+### Configure ssh <a name="configure-machines-4"/>
 
 Lo siguiente es configurar los accesos a través de ssh entre las máquinas para que no
 solicite clave cada vez que la máquina maestro (master) acceda a cada esclavo (slave1, slave2..etc)
@@ -194,9 +195,9 @@ bastara escribir algo así:
 $ ssh slave1
 ```
 
-## Instalación Geant4
+## Installing Geant4
 
-### Instalación pre requisitos
+### Install prerequisites
 
 - **CLHEP** http://proj-clhep.web.cern.ch/proj-clhep/clhep23.html
 leer el archivo README.txt, luego crear una carpeta Build y una install dentro de la carpeta build hacer:
@@ -248,7 +249,7 @@ $ sudo rm /usr/bin/g++
 $ sudo ln -s /usr/bin/gcc-5 /usr/bin/gcc 
 $ sudo ln -s /usr/bin/g++-5 /usr/bin/g++ 
 ```
-### Instalación de Geant4
+### Install Geant4
 Creación carpetas de instalación:
 ```sh
 $ cd $HOME
@@ -296,7 +297,7 @@ Verificar instalación y configuración:
 ```sh
 $ ./geant4-config --help
 ```
-### Configurar variables de entorno para Geant4
+### Set environment variables
 
 Abrir el archivo bashrc:
 
@@ -318,7 +319,7 @@ export G4REALSURFACEDATA=/home/gfnun/Geant4-10.6/install/share/Geant4-10.6.1/dat
 export G4SAIDXSDATA=/home/gfnun/Geant4-10.6/install/share/Geant4-10.6.1/data/G4SAIDDATA2.0
 ```
 
-### Ejecutar ejemplo B1:
+### Execute example B1
 
 ```sh
 $ cd /home/gfnun/Geant4-10.6/src/geant4.10.06.p01/examples/basic/B1
@@ -330,9 +331,9 @@ $ make -j4
 $ ./exampleB1
 ```
 
-## Compilando G4mpi
+## Compiling G4mpi
 
-### Compilación G4mpi:
+### Compile G4mpi
 
 ```sh
 $ geant4
@@ -345,7 +346,7 @@ $ make
 $ make install
 ```
 
-### Ejecutando ejemplo exMPI01:
+### Executing exMP01.
 
 Compilando:
 ```sh
@@ -367,9 +368,9 @@ El mpiexec con el que se ejecuta es desde el open mpi que viene por defecto en l
 mpiexec --help
 ```
 
-## Configurando servidor NFS
+## Configure the NFS server
 
-En el MASTER:
+### Setting up serve on master machine:
 
 ```sh
 $ sudo apt install nfs-kernel-server portmap
@@ -447,7 +448,7 @@ iniciar servicio:
 $ sudo /etc/init.d/nfs-kernel-server start
 ```
 
-En cada Esclavo:
+### Setting up on slavers machines
 
 ```sh
 $ sudo mount master:/home/gfnun/sharedFolder sharedFolder/
@@ -467,6 +468,7 @@ master:/home/gfnun/sharedFolder               723G  440G  247G  65% /home/gfnun/
 master:/home/gfnun/Geant4-10.6                723G  440G  247G  65% /home/gfnun/Geant4-10.6
 master:/home/gfnun/Geant4-10.5                723G  440G  247G  65% /home/gfnun/Geant4-10.5
 ```
+### Test the NFS server
 
 En uno de los esclavos podemos probar que se comparten los archivos:
 
@@ -477,7 +479,7 @@ $ touch test.txt
 y verificar que se vea desde el maestro.
 
 
-## Instalación Open mpi 
+## Install Open-mpi 
 
 Descargar de la página https://www.open-mpi.org/software/ompi/v4.0/ el archivo openmpi-4.0.3.tar.gz
 dejarlo en el directorio:
@@ -494,6 +496,7 @@ $ cd sharedFolder/
 $ mkdir openmpi-install/
 $ tar -xzf openmpi-4.0.3.tar.gz
 ```
+### Setting up
 
 Compilar:
 
@@ -504,6 +507,7 @@ $ cd build
 $ ../configure --prefix=/home/gfnun/sharedFolder/openmpi-install/ --enable-mpi-cxx --enable-orterun-prefix-by-default 
 $ sudo make -j4
 ```
+### Installation:
 
 Instalar:
 
@@ -538,9 +542,7 @@ slave1 slots=2
 slave2 slots=2
 ```
 
-
-
-Ejecutar ejemplo:
+### Executing examples
 
 ```sh
 $ cd ..
@@ -549,9 +551,9 @@ $ sudo mpicc hello_c.c -o hello_c
 $ mpiexec -np 4 --hostfile my_hosts ./hello_c
 ```
 
-## Ejecutando ejemplos de geant4 en el sistema distribuido
+## Executing example on cluster
 
-### Ejemplo exMPI01
+### Example exMPI01
 
 Compilar:
 
@@ -573,7 +575,7 @@ $ mpiexec -np 4 ./exMPI01
 
 
 
-### Ejemplo exMPI04
+### Example exMPI04
 
 Compilar, para compilar se debe hacer desde el compilador de open mpi instalado en la carpeta sharedFolder/
 
@@ -585,6 +587,8 @@ $ sudo cmake -DG4mpi_DIR=/home/gfnun/Geant4-10.6/geant4-mpi/lib/G4mpi-10.6.1 -DC
 $ make
 $ make install
 ```
+
+### Execute example exMPI01
 
 Ejecutar con Open mpi:
 
@@ -601,12 +605,12 @@ $ cd build
 $ mpiexec -n 4 ./exMPI04
 ```
 
-## Configurar una aplicación para uso con MPI
+## Set up a Geant4 application with MPI
 
 Para este ejemplo se va usar la aplicación g4pntest, ubicada en este repositorio en la carpeta 00_g4_apps/
 
 
-### Configuración sesión con G4mpi
+### Configure G4mpi session
 
 Agregar las librerias necesarias para el uso de G4mpi, en PNtest.cc:
 
@@ -692,7 +696,7 @@ Por último se elimina la sesión de mpi agregando la siguiente línea de códig
   return 0;
 ```
 
-### Configuración CMakeLists.txt
+### Configure CMakeLists.txt
 
 Para el paquete de G4mpi agregar:
 
@@ -712,7 +716,7 @@ Añadir ejecutable y enlace con las librerias Geant4:
 ```c++
 target_link_libraries(PNtest ${G4mpi_LIBRARIES})
 ```
-### Configuración archivos .csv
+### Configure .csv files 
 
 La función RunAction::BeginOfRunAction(const G4Run* aRun), se deja así, para la generación de cada archivo .csv en cada nodo o cada hilo:
 
@@ -796,7 +800,7 @@ void RunAction::EndOfRunAction(const G4Run* aRun)
 }
 ```
 
-### Configuración Clúster
+### Set up cluster
 
 Para configurar el clúster y hacer uso de este con open mpi creamos un archio de texto plano llamado hostfile. Para este caso se tiene disponible 5 computadores con 8 hilos cada uno, es decir el clúster tiene 40 hilos disponibles. Si se desea usar todos los hilos disponibles el archivo debería erse así:
 
@@ -820,7 +824,7 @@ Se puede administrar la cantidad de hilos a usar y en que computadores,por ejemp
 En este caso configuramos el clúster para usar 2 hilos por cada computador lo que da un total de 10 hilos a usar por el clúster.
 
 
-### Comando Ejecución con Open mpi
+### Commands to execute with Open-mpi.
 
 A continuación el paso a paso para la ejecución de la aplicación:
 
