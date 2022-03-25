@@ -2,15 +2,11 @@
 
 - [Prerequisites](#prerequisities)
 - [Configure machines](#Configure-machines)
-    - [Create and configure users for each one.]
-    - [Configure static IP.]
-    - [Configure hosts files.]
-    - [Configure ssh.]
-    - [No hay acceso a Nicanor (Remoto)](requisitos)
-    - [Hay acceso a Nicanor pero no a la red local](dsf)  
-    - [Hay acceso a Nicanor pero no puedo ingresar a ningun computador vía ssh](sdf)
-    - [Hay acceso a Nicanor pero solo algunos computadores](requisitos)
-    - [Hay acceso a Nicanor y a la red local pero los computadores de la red local no tienen internet](requisitos)
+    * [Create and configure users for each one.](#)
+    - [Configure static IP.](#)
+    - [Configure hosts files.](#)
+    - [Configure ssh.](#)
+
 - [Comandos útiles para la red](requisitos)   
 - [Configuración equipos con Arch linux](requisitos)
 - [Configuración equipos con distribuciones basadas en Debian](requisitos)  
